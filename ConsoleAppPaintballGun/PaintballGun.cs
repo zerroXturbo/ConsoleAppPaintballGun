@@ -3,27 +3,33 @@
 public class PaintballGun
 {
     public const int MagazineSize = 16;
-    public int GetBalls { get; private set; } = 0;
-    public int GetBallsLoaded { get; private set; } = 0;
-    public bool IsEmpty => GetBallsLoaded == 0;
-    
-    public void SetBalls(int numberOfBalls)
+
+    private int _balls = 0;
+
+    public int Balls
     {
-        if (numberOfBalls > 0)
-            GetBalls = numberOfBalls;
-        Reload();
+        get => _balls;
+        set
+        {
+            if (value > 0) _balls = value;
+            Reload();
+        }
     }
-    
+
+    public int BallsLoaded { get; private set; } = 0;
+
+    public bool IsEmpty => BallsLoaded == 0;
+
     public void Reload()
     {
-        GetBallsLoaded = GetBalls > MagazineSize ? MagazineSize : GetBalls;
+        BallsLoaded = Balls > MagazineSize ? MagazineSize : Balls;
     }
     
     public bool Shoot()
     {
-        if (GetBallsLoaded == 0) return false;
-        GetBallsLoaded--;
-        GetBalls--;
+        if (BallsLoaded == 0) return false;
+        BallsLoaded--;
+        Balls--;
         return true;
     }
 }
