@@ -1,6 +1,12 @@
 ﻿using ConsoleAppPaintballGun;
 
-var gun = new PaintballGun();
+var numberOfBalls = ReadInt(20, "Number of balls");
+var magazineSize = ReadInt(16, "Magazine size");
+
+Console.WriteLine($"Loaded [false]: ");
+bool.TryParse(Console.ReadLine(), out var isLoaded);
+
+var gun = new PaintballGun(numberOfBalls, magazineSize, isLoaded);
 
 while (true)
 {
@@ -18,9 +24,15 @@ while (true)
             gun.Reload();
             break;
         case '+':
-            gun.Balls += PaintballGun.MagazineSize;
+            gun.Balls += gun.MagazineSize;
             break;
         case 'q':
             return;
     }
+}
+
+int ReadInt(int defaultValue, string str)
+{
+    Console.WriteLine(str);
+    return int.TryParse(Console.ReadLine(), out var result) ? result : defaultValue;
 }

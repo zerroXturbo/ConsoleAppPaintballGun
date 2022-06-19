@@ -2,7 +2,7 @@
 
 public class PaintballGun
 {
-    public const int MagazineSize = 16;
+    public int MagazineSize { get; private set; } = 16;
 
     private int _balls = 0;
 
@@ -15,21 +15,27 @@ public class PaintballGun
             Reload();
         }
     }
-
     public int BallsLoaded { get; private set; } = 0;
-
     public bool IsEmpty => BallsLoaded == 0;
 
+    public PaintballGun() { }
+    public PaintballGun(int balls, int magazineSize, bool leaded)
+    {
+        _balls = balls;
+        MagazineSize = magazineSize;
+        if (leaded) Reload();
+    }
+    
     public void Reload()
     {
         BallsLoaded = Balls > MagazineSize ? MagazineSize : Balls;
     }
-    
+
     public bool Shoot()
     {
         if (BallsLoaded == 0) return false;
         BallsLoaded--;
-        Balls--;
+        _balls--;
         return true;
     }
 }
